@@ -1,42 +1,27 @@
-use std::io;
-use rand::Rng;
-use std::cmp::Ordering;
+use std::io::{stdout, Write};
 
-fn main() {
-    println!("Guess the number!");
+use crossterm::{
+    execute,
+    style::{Color, Print, ResetColor, SetBackgroundColor, SetForegroundColor},
+    ExecutableCommand, event,
+};
 
-    let secret_number = rand::thread_rng().gen_range(1..=100);
-    
-    println!("The secret number is: {secret_number}");
+fn main() -> std::io::Result<()> {
+    // using the macro
+    execute!(
+        stdout(),
+        SetForegroundColor(Color::White),
+        SetBackgroundColor(Color::Red),
+        Print(" KatCote "),
+        ResetColor
+    )?;
 
-    loop {    
+    // or using functions
+    stdout()
+        .execute(SetForegroundColor(Color::White))?
+        .execute(SetBackgroundColor(Color::Blue))?
+        .execute(Print(" AltenCøre "))?
+        .execute(ResetColor)?;    
 
-        println!("\nPlease input your guess.");
-
-        let mut guess = String::new();
-
-        io::stdin()
-            .read_line(&mut guess)
-            .expect("Failed to read line");
-
-        let guess: u32 = match guess.trim().parse() {
-            Ok(num) => num,
-            Err(_) => {
-                println!("It's not a number!");
-                continue;
-            }
-        };
-
-        println!("\nYour guess: {guess}");
-
-        match guess.cmp(&secret_number) {
-            Ordering::Less => println!("Too small!"),
-            Ordering::Greater => println!("Too big!"),
-            Ordering::Equal => {
-                println!("It's it!\n\n\tYou win!");
-                break;
-            }
-
-        }
-    }
+    Ok(())
 }
