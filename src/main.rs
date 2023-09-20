@@ -10,17 +10,17 @@ fn main() -> std::io::Result<()> {
     // using the macro
     execute!(
         stdout(),
-        SetForegroundColor(Color::White),
+        SetForegroundColor(Color::Black),
         SetBackgroundColor(Color::Red),
-        Print(" KatCote "),
+        Print(" Powered by "),
         ResetColor
     )?;
 
     // or using functions
     stdout()
-        .execute(SetForegroundColor(Color::White))?
-        .execute(SetBackgroundColor(Color::Blue))?
-        .execute(Print(" AltenCøre "))?
+        .execute(SetForegroundColor(Color::Red))?
+        .execute(SetBackgroundColor(Color::Black))?
+        .execute(Print(" CastleCore "))?
         .execute(ResetColor)?;    
 
     Ok(())
