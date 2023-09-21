@@ -1,9 +1,9 @@
-use std::io::{stdout, Write};
+use std::io::{stdout, /* Write */};
 
 use crossterm::{
     execute,
     style::{Color, Print, ResetColor, SetBackgroundColor, SetForegroundColor},
-    ExecutableCommand, event,
+    ExecutableCommand, /* event, */
 };
 
 fn main() -> std::io::Result<()> {
@@ -23,5 +23,13 @@ fn main() -> std::io::Result<()> {
         .execute(Print(" CastleCore "))?
         .execute(ResetColor)?;    
 
+    let test_integer = take_int_and_return(128);
+
+    println!("{test_integer}");
+
     Ok(())
+}
+
+fn take_int_and_return(input_int: u32) -> u32 {
+    input_int
 }
