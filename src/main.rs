@@ -1,35 +1,19 @@
-use std::io::{stdout, /* Write */};
+#![allow(unused)]
+fn main() {
+use std::arch::asm;
 
-use crossterm::{
-    execute,
-    style::{Color, Print, ResetColor, SetBackgroundColor, SetForegroundColor},
-    ExecutableCommand, /* event, */
-};
-
-fn main() -> std::io::Result<()> {
-    // using the macro
-    execute!(
-        stdout(),
-        SetForegroundColor(Color::Black),
-        SetBackgroundColor(Color::Red),
-        Print(" Powered by "),
-        ResetColor
-    )?;
-
-    // or using functions
-    stdout()
-        .execute(SetForegroundColor(Color::Red))?
-        .execute(SetBackgroundColor(Color::Black))?
-        .execute(Print(" CastleCore "))?
-        .execute(ResetColor)?;    
-
-    let test_integer = take_int_and_return(128);
-
-    println!("{test_integer}");
-
-    Ok(())
+let mut a: u64 = 4;
+let b: u64 = 4;
+let c: u64 = 4;
+unsafe {
+    asm!(
+        "add {0}, {1}",
+        "add {0}, {2}",
+        inout(reg) a,
+        in(reg) b,
+        in(reg) c,
+    );
 }
-
-fn take_int_and_return(input_int: u32) -> u32 {
-    input_int
+assert_eq!(a, 12);
+println!("{}", a);
 }
