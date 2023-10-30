@@ -1,19 +1,25 @@
-fn main() {
-
+fn cpy(to: &mut u16, from: &mut u16){
     use std::arch::asm;
-
-    let mut port: u8 = 255;
-    let mut result: u8 = 1;
-
-    println!("{} {}", &result, &port);
 
     unsafe{
         asm!(
-            "add al, bl;",
-            inout("al") result,
-            inout("bl") port,
+
+            "xor eax, eax",
+            "add eax, edx",
+
+            inout("eax") *to,
+            inout("edx") *from,
         );
     }
+}
+fn main() {
 
-    println!("{} {}", &result, &port);
+    let mut port: u16 = 10;
+    let mut result: u16 = 0;
+
+    println!("\n\tTO\tFROM\t\n\t{}\t{}", result, port);
+
+    cpy(&mut result, &mut port);
+
+    println!("\t{}\t{}\n", result, port);
 }
